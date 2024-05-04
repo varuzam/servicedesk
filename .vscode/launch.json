@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ServicedeskApplication<servicedesk>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "gm.servicedesk.App",
+            "projectName": "servicedesk",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
