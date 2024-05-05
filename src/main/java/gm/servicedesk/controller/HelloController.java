@@ -1,5 +1,7 @@
 package gm.servicedesk.controller;
 
+import java.security.Principal;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +30,9 @@ public class HelloController {
 
     @GetMapping("/str")
     @ResponseBody
-    public String hello_string() {
+    public String hello_string(Principal principal) {
         log.info("/hello/str is requested");
-        return "Hello World";
+        return "Hello " + principal.getName();
     }
 
     @GetMapping("/template")

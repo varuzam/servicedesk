@@ -22,15 +22,17 @@ public class AppConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.formLogin(Customizer.withDefaults())
+        return http
                 .authorizeHttpRequests(req -> req
                         .requestMatchers("/login/**").permitAll()
                         .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                         .requestMatchers("/staff/**").hasAnyAuthority("ADMIN", "STAFF")
                         .requestMatchers("/customer/**").hasAnyAuthority("CUSTOMER")
                         .anyRequest().authenticated())
-                .userDetailsService(userService).build();
-
+                .formLogin(Customizer.withDefaults())
+                .userDetailsService(userService)
+                .oauth2Login(o -> o.userInfoEndpoint(uie -> uie.userService(userService)))
+                .build();
     }
 
     @Bean
