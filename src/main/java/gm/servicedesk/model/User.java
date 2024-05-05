@@ -22,6 +22,12 @@ public class User implements UserDetails, OAuth2User {
     @Column(unique = true, nullable = false)
     String username;
 
+    @Column(unique = true)
+    String email;
+
+    @Column(unique = true, nullable = false)
+    String fullname;
+
     String password;
 
     @Column(nullable = false)
@@ -43,6 +49,22 @@ public class User implements UserDetails, OAuth2User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullName) {
+        this.fullname = fullName;
     }
 
     @Override
