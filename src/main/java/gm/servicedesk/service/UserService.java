@@ -25,6 +25,7 @@ public class UserService implements UserDetailsService, OAuth2UserService<OAuth2
         this.repo = repo;
     }
 
+    // used by Spring Security for formLogin & httpBasic
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = repo.findByUsername(username);
@@ -34,6 +35,7 @@ public class UserService implements UserDetailsService, OAuth2UserService<OAuth2
         return user;
     }
 
+    // used by Spring Security for oauth2Login
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oauth2User = (new DefaultOAuth2UserService()).loadUser(userRequest);
