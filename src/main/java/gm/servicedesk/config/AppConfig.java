@@ -9,15 +9,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import gm.servicedesk.service.UserService;
+import gm.servicedesk.service.UserAuthService;
 
 @Configuration
 @EnableConfigurationProperties(AppProperties.class)
 public class AppConfig {
-    private final UserService userService;
+    private final UserAuthService userAuthService;
 
-    public AppConfig(UserService userService) {
-        this.userService = userService;
+    public AppConfig(UserAuthService userAuthService) {
+        this.userAuthService = userAuthService;
     }
 
     @Bean
@@ -30,8 +30,8 @@ public class AppConfig {
                         .requestMatchers("/customer/**").hasAnyAuthority("CUSTOMER")
                         .anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults())
-                .userDetailsService(userService)
-                .oauth2Login(o -> o.userInfoEndpoint(uie -> uie.userService(userService)))
+                .userDetailsService(userAuthService)
+                .oauth2Login(o -> o.userInfoEndpoint(uie -> uie.userService(userAuthService)))
                 .build();
     }
 
