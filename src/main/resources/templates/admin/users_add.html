@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:,">
+    <title>Create user</title>
+</head>
+
+<body>
+    <form action="" method="post">
+        <div class="container">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+            <label for="username"><b>Username (login)</b></label>
+            <input type="text" name="username" id="username" required>
+
+            <label for="fullname"><b>Full name</b></label>
+            <input type="text" name="fullname" id="fullname" required>
+
+            <label for="password"><b>Password</b></label>
+            <input type="password" name="password" id="password" required>
+
+            <!-- <label for="password-repeat"><b>Repeat Password</b></label>
+            <input type="password" name="password" id="password-repeat" required> -->
+
+            <label for="email"><b>Email</b></label>
+            <input type="text" name="email" id="email">
+
+            <label for="role"><b>Role</b></label>
+            <input type="text" name="role" id="role">
+
+            <button type="submit" class="registerbtn">Add</button>
+        </div>
+    </form>
+</body>
+
+</html>
