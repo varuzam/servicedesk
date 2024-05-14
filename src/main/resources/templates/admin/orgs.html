@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:,">
+    <title>Users</title>
+</head>
+
+<body>
+    <div><a th:href="@{/admin/orgs/add}">Add organisation</a></div>
+    <table>
+        <thead>
+            <tr>
+                <th> Name </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="org : ${orgs}">
+                <td><span th:text="${org.name}"> name </span></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

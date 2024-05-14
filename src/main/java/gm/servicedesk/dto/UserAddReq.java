@@ -9,5 +9,6 @@ public record UserAddReq(
         @NotBlank(message = "Invalid fullname") @Size(min = 6, max = 32) String fullname,
         @Email @Size(max = 32) String email,
         @NotBlank(message = "Invalid password") @Size(min = 8, max = 32) String password,
-        @NotNull(message = "Invalid role") Role role) {
+        @NotNull(message = "Invalid role") Role role,
+        String org) {
 }

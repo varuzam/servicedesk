@@ -2,7 +2,6 @@ package gm.servicedesk.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,8 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import gm.servicedesk.config.AppProperties;
+import gm.servicedesk.dto.OrgAddReq;
 import gm.servicedesk.dto.UserAddReq;
+import gm.servicedesk.service.OrgService;
 import gm.servicedesk.service.UserService;
 import jakarta.validation.Valid;
 
@@ -19,26 +19,35 @@ import jakarta.validation.Valid;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @Autowired
-    AppProperties config;
-
+    private final OrgService orgService;
     private final UserService userService;
     static final Logger log = LoggerFactory.getLogger(AdminController.class);
 
-    AdminController(UserService userService) {
+    AdminController(OrgService orgService, UserService userService) {
+        this.orgService = orgService;
         this.userService = userService;
     }
 
+    // --- ORG ---
     @GetMapping("/orgs")
     public String orgs(Model viewModel) {
+        viewModel.addAttribute("orgs", orgService.findAll());
         return "admin/orgs.html";
+    }
+
+    @GetMapping("/orgs/add")
+    public String org_add_form() {
+        return "admin/orgs_add.html";
     }
 
     @PostMapping("/orgs/add")
-    public String orgs_add() {
-        return "admin/orgs.html";
+    @ResponseBody
+    public String org_add_form(@Valid OrgAddReq form) {
+        orgService.addOrg(form);
+        return "Org added";
     }
 
+    // --- USER ---
     @GetMapping("/users")
     public String users(Model viewModel) {
         viewModel.addAttribute("users", userService.findAll());

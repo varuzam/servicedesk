@@ -8,7 +8,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import gm.servicedesk.dto.UserAddReq;
+import gm.servicedesk.model.Org;
 import gm.servicedesk.model.User;
+import gm.servicedesk.repository.OrgRepo;
 import gm.servicedesk.repository.UserRepo;
 
 @Service
@@ -16,10 +18,12 @@ public class UserService {
 
     static final Logger log = LoggerFactory.getLogger(UserService.class);
     private final UserRepo repo;
+    private final OrgRepo orgRepo;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepo repo, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepo repo, OrgRepo orgRepo, PasswordEncoder passwordEncoder) {
         this.repo = repo;
+        this.orgRepo = orgRepo;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -34,6 +38,11 @@ public class UserService {
         user.setEmail(req.email());
         user.setPassword(passwordEncoder.encode(req.password()));
         user.setRole(req.role());
+
+        Org org = orgRepo.findIdByName(req.org());
+        if (org != null) {
+            user.setOrg(org);
+        }
         return repo.save(user);
     }
 }

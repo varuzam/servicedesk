@@ -34,6 +34,10 @@ public class User implements UserDetails, OAuth2User {
     @Enumerated(EnumType.STRING)
     Role role;
 
+    @ManyToOne()
+    @JoinColumn(name = "org_id")
+    Org org;
+
     public Integer getId() {
         return id;
     }
@@ -82,6 +86,14 @@ public class User implements UserDetails, OAuth2User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Org getOrg() {
+        return org;
+    }
+
+    public void setOrg(Org org) {
+        this.org = org;
     }
 
     @Override
