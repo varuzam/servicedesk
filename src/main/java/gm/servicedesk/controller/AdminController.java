@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import gm.servicedesk.model.Role;
 import gm.servicedesk.dto.OrgAddReq;
@@ -42,6 +42,12 @@ public class AdminController {
         return "redirect:/admin/orgs";
     }
 
+    @GetMapping("/orgs/{id}/delete")
+    public String deleteOrg(@PathVariable Integer id) {
+        orgService.deleteOrg(id);
+        return "redirect:/admin/orgs";
+    }
+
     // --- USER ---
     @GetMapping("/users")
     public String users(Model viewModel) {
@@ -57,4 +63,9 @@ public class AdminController {
         return "redirect:/admin/users";
     }
 
+    @GetMapping("/users/{id}/delete")
+    public String deleteUser(@PathVariable Integer id) {
+        userService.deleteUser(id);
+        return "redirect:/admin/users";
+    }
 }

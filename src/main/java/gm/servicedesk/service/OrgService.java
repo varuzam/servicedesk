@@ -29,4 +29,8 @@ public class OrgService {
         org.setName(req.name());
         return repo.save(org);
     }
+
+    public void deleteOrg(Integer id) {
+        repo.deleteById(id);
+    }
 }

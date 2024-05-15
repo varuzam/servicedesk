@@ -16,6 +16,7 @@
             <tbody>
                 <tr th:each="org : ${orgs}">
                     <td><span th:text="${org.name}"> name </span></td>
+                    <td><a th:href="@{|/admin/orgs/${org.id}/delete|}"><i class="bi bi-trash"></i></a></td>
                 </tr>
             </tbody>
         </table>
