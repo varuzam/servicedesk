@@ -27,11 +27,11 @@ public class AppConfig {
         return http
                 .authorizeHttpRequests(req -> req
                         .requestMatchers("/login/**").permitAll()
+                        .requestMatchers("/register/*").permitAll()
                         .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                         .requestMatchers("/staff/**").hasAnyAuthority("ADMIN", "STAFF")
                         .requestMatchers("/customer/admin/**").hasAnyAuthority("CUSTOMER_ORG_ADMIN")
                         .requestMatchers("/customer/**").hasAnyAuthority("CUSTOMER", "CUSTOMER_ORG_ADMIN")
-                        .requestMatchers("/register/*").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults())
                 .userDetailsService(userAuthService)

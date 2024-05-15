@@ -1,12 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="data:,">
-    <title>Register user</title>
-</head>
+<head th:replace="~{snippets/base.html::head('Register user')}"></head>
 
 <body>
     <script>
@@ -20,49 +15,32 @@
         }
     </script>
 
-    <select id="form-selector" onchange="showRegisterForm()">
-        <option value="_">Choose auth type</option>
-        <option value="internal">InternalDB</option>
-        <option value="github">Github.com</option>
-    </select>
+    <div class="container">
+        <select id="form-selector" class="form-select my-3" onchange="showRegisterForm()">
+            <option value="_">Choose authentication source type</option>
+            <option value="internal">InternalDB</option>
+            <option value="github">Github.com Oauth</option>
+        </select>
 
-    <form id="internal" action="" method="post" style="display: none;">
-        <div class="container">
+        <form id="internal" action="" method="post" style="display: none;">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <input type="text" name="username" class="form-control mb-3" placeholder="Username" minlength="3" required>
+            <input type="text" name="fullname" class="form-control mb-3" placeholder="Full Name" minlength="6" required>
+            <input type="password" name="password" class="form-control mb-3" placeholder="Password" minlength="8"
+                required>
+            <input type="text" name="email" class="form-control mb-3" placeholder="Email (optional)">
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
 
-            <label for="username"><b>Username (login)</b></label>
-            <input type="text" name="username" id="username" required>
-
-            <label for="fullname"><b>Full name</b></label>
-            <input type="text" name="fullname" id="fullname" required>
-
-            <label for="password"><b>Password</b></label>
-            <input type="password" name="password" id="password" minlength="8" required>
-
-            <label for="email"><b>Email</b></label>
-            <input type="text" name="email" id="email">
-
-            <button type="submit" class="registerbtn">Add</button>
-        </div>
-    </form>
-
-    <form id="github" action="" method="post" style="display: none;">
-        <div class="container">
+        <form id="github" action="" method="post" style="display: none;">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-
-            <label for="username"><b>Username as at github.com</b></label>
-            <input type="text" name="username" id="username" required>
-
-            <label for="fullname"><b>Full name</b></label>
-            <input type="text" name="fullname" id="fullname" required>
-
-            <label for="email"><b>Email</b></label>
-            <input type="text" name="email" id="email">
-
-            <button type="submit" class="registerbtn">Add</button>
-        </div>
-    </form>
-
+            <input type="text" name="username" class="form-control mb-3" placeholder="Username at github.com"
+                minlength="3" required>
+            <input type="text" name="fullname" class="form-control mb-3" placeholder="Full Name" minlength="6" required>
+            <input type="text" name="email" class="form-control mb-3" placeholder="Email (optional)">
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
 </body>
 
 </html>

@@ -36,37 +36,25 @@ public class AdminController {
         return "admin/orgs.html";
     }
 
-    @GetMapping("/orgs/add")
-    public String org_add_form() {
-        return "admin/orgs_add.html";
-    }
-
     @PostMapping("/orgs/add")
-    @ResponseBody
     public String org_add_form(@Valid OrgAddReq form) {
         orgService.addOrg(form);
-        return "Org added";
+        return "redirect:/admin/orgs";
     }
 
     // --- USER ---
     @GetMapping("/users")
     public String users(Model viewModel) {
         viewModel.addAttribute("users", userService.findAll());
+        viewModel.addAttribute("roles", Role.values());
+        viewModel.addAttribute("orgs", orgService.findAll());
         return "admin/users.html";
     }
 
-    @GetMapping("/users/add")
-    public String user_add_form(Model viewModel) {
-        viewModel.addAttribute("roles", Role.values());
-        viewModel.addAttribute("orgs", orgService.findAll());
-        return "admin/users_add.html";
-    }
-
     @PostMapping("/users/add")
-    @ResponseBody
     public String user_add_form(@Valid UserAddReq form) {
         userService.addUser(form);
-        return "User added";
+        return "redirect:/admin/users";
     }
 
 }
