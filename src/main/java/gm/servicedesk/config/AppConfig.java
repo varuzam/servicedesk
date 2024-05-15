@@ -3,6 +3,7 @@ package gm.servicedesk.config;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,6 +14,7 @@ import gm.servicedesk.service.UserAuthService;
 
 @Configuration
 @EnableConfigurationProperties(AppProperties.class)
+@EnableScheduling
 public class AppConfig {
     private final UserAuthService userAuthService;
 
@@ -28,7 +30,8 @@ public class AppConfig {
                         .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                         .requestMatchers("/staff/**").hasAnyAuthority("ADMIN", "STAFF")
                         .requestMatchers("/customer/admin/**").hasAnyAuthority("CUSTOMER_ORG_ADMIN")
-                        .requestMatchers("/customer/**").hasAnyAuthority("CUSTOMER")
+                        .requestMatchers("/customer/**").hasAnyAuthority("CUSTOMER", "CUSTOMER_ORG_ADMIN")
+                        .requestMatchers("/register/*").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults())
                 .userDetailsService(userAuthService)

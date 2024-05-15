@@ -18,6 +18,9 @@ public class Org {
     @OneToMany(mappedBy = "org", cascade = CascadeType.ALL)
     private List<User> users;
 
+    @OneToMany(mappedBy = "org", cascade = CascadeType.ALL)
+    private List<UserInvite> userInvites;
+
     public Integer getId() {
         return id;
     }
@@ -40,6 +43,14 @@ public class Org {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public List<UserInvite> getUserInvites() {
+        return userInvites;
+    }
+
+    public void setUserInvites(List<UserInvite> userInvites) {
+        this.userInvites = userInvites;
     }
 
 }
