@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import gm.servicedesk.model.Role;
 import gm.servicedesk.dto.OrgAddReq;
 import gm.servicedesk.dto.UserAddReq;
 import gm.servicedesk.service.OrgService;
@@ -55,7 +56,9 @@ public class AdminController {
     }
 
     @GetMapping("/users/add")
-    public String user_add_form() {
+    public String user_add_form(Model viewModel) {
+        viewModel.addAttribute("roles", Role.values());
+        viewModel.addAttribute("orgs", orgService.findAll());
         return "admin/users_add.html";
     }
 

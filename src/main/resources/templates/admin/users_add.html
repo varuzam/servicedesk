@@ -29,10 +29,15 @@
             <input type="text" name="email" id="email">
 
             <label for="role"><b>Role</b></label>
-            <input type="text" name="role" id="role">
+            <select name="role">
+                <option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
+            </select>
 
             <label for="org"><b>Org</b></label>
-            <input type="text" name="org" id="org">
+            <select name="org">
+                <option value=""></option>
+                <option th:each="org : ${orgs}" th:value="${org.name}" th:text="${org.name}"></option>
+            </select>
 
             <button type="submit" class="registerbtn">Add</button>
         </div>
