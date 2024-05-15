@@ -4,6 +4,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -32,6 +33,12 @@ public class CustomerAdminController {
     public String user_invite(@AuthenticationPrincipal User user) {
         String token = userService.inviteUser(user.getOrg());
         return token;
+    }
+
+    @GetMapping("/users/{id}/delete")
+    public String deleteUser(@AuthenticationPrincipal User user, @PathVariable Integer id) {
+        userService.deleteUser(id, user.getOrg());
+        return "redirect:/customer/admin/users";
     }
 
 }

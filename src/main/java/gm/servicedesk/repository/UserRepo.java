@@ -10,4 +10,6 @@ public interface UserRepo extends JpaRepository<User, Integer> {
     public User findByUsername(String username);
 
     public List<User> findByOrg(Org org);
+
+    public void deleteByIdAndOrg(Integer id, Org org);
 }
