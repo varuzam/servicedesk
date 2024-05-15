@@ -27,6 +27,7 @@ public class AppConfig {
                         .requestMatchers("/login/**").permitAll()
                         .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                         .requestMatchers("/staff/**").hasAnyAuthority("ADMIN", "STAFF")
+                        .requestMatchers("/customer/admin/**").hasAnyAuthority("CUSTOMER_ORG_ADMIN")
                         .requestMatchers("/customer/**").hasAnyAuthority("CUSTOMER")
                         .anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults())

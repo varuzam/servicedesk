@@ -31,6 +31,10 @@ public class UserService {
         return repo.findAll();
     }
 
+    public List<User> findByOrg(Org org) {
+        return repo.findByOrg(org);
+    }
+
     public User addUser(UserAddReq req) {
         User user = new User();
         user.setUsername(req.username());
