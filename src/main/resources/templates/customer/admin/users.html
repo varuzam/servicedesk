@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
-<head th:replace="~{snippets/base.html::head('List users')}"></head>
+<head th:replace="~{_base.html::head('List users')}"></head>
 
 <body>
-    <div class="container">
-        <div><a th:href="@{/customer/admin/users/invite}">Invite user</a></div>
+    <nav th:replace="~{_base.html::navbar}"></nav>
+    <div class="container mt-2">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="button" class="btn btn-primary " th:hx-get="@{/customer/admin/users/invite}" hx-target="body"
+                hx-swap="beforeend">Invite user</button>
+        </div>
         <table class="table">
             <thead>
                 <tr>

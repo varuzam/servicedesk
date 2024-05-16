@@ -6,10 +6,26 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Page Title</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/htmx.min.js"
+        integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
     <p th:text="${content}">content</p>
+
+    <button hx-get="/hello/snippet" hx-target="#snippet">Click Me</button>
+    <div id="snippet"></div>
+
+    <div sec:authentication="principal.authorities"></div>
+
+    <div sec:authorize="hasAuthority('ADMIN')">
+        This content is only shown to ADMIN.
+    </div>
+    <div sec:authorize="hasAuthority('CUSTOMER_ORG_ADMIN')">
+        This content is only shown to CUSTOMER_ORG_ADMIN.
+    </div>
+
 </body>
 
 </html>

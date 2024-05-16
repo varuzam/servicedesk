@@ -36,14 +36,19 @@ public class AdminController {
         return "admin/orgs.html";
     }
 
+    @GetMapping("/orgs/add")
+    public String add_org_dialog() {
+        return "admin/_add_org_dialog.html";
+    }
+
     @PostMapping("/orgs/add")
-    public String org_add_form(@Valid OrgAddReq form) {
+    public String add_org_form(@Valid OrgAddReq form) {
         orgService.addOrg(form);
         return "redirect:/admin/orgs";
     }
 
     @GetMapping("/orgs/{id}/delete")
-    public String deleteOrg(@PathVariable Integer id) {
+    public String delete_org(@PathVariable Integer id) {
         orgService.deleteOrg(id);
         return "redirect:/admin/orgs";
     }
@@ -52,19 +57,24 @@ public class AdminController {
     @GetMapping("/users")
     public String users(Model viewModel) {
         viewModel.addAttribute("users", userService.findAll());
-        viewModel.addAttribute("roles", Role.values());
-        viewModel.addAttribute("orgs", orgService.findAll());
         return "admin/users.html";
     }
 
+    @GetMapping("/users/add")
+    public String add_user_dialog(Model viewModel) {
+        viewModel.addAttribute("roles", Role.values());
+        viewModel.addAttribute("orgs", orgService.findAll());
+        return "admin/_add_user_dialog.html";
+    }
+
     @PostMapping("/users/add")
-    public String user_add_form(@Valid UserAddReq form) {
+    public String add_user_form(@Valid UserAddReq form) {
         userService.addUser(form);
         return "redirect:/admin/users";
     }
 
     @GetMapping("/users/{id}/delete")
-    public String deleteUser(@PathVariable Integer id) {
+    public String delete_user(@PathVariable Integer id) {
         userService.deleteUser(id);
         return "redirect:/admin/users";
     }

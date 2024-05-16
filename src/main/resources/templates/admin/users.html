@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
-<head th:replace="~{snippets/base.html::head('List users')}"></head>
+<head th:replace="~{_base.html::head('List users')}"></head>
 
 <body>
-    <div class="container">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">Add
-            user</button>
+    <nav th:replace="~{_base.html::navbar}"></nav>
+    <div class="container mt-2">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addUserDialog"
+                hx-get="/admin/users/add" hx-target="#addUserDialog" hx-trigger="click">Add
+                user</button>
+        </div>
         <table class="table">
             <thead>
                 <tr>
@@ -24,43 +28,18 @@
                     <td><span th:text="${user.email}"> email </span></td>
                     <td><span th:text="${user.role}"> role </span></td>
                     <td><span th:text="${user.org!=null}?${user.org.name}:''"> org </span></td>
-                    <td><a th:href="@{|/admin/users/${user.id}/delete|}"><i class="bi bi-trash"></i></a></td>
+                    <td>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end"><a
+                                th:href="@{|/admin/users/${user.id}/edit|}"><i class="bi bi-pencil-fill"></i></a><a
+                                th:href="@{|/admin/users/${user.id}/delete|}"><i class="bi bi-trash"></i></a></div>
+                    </td>
                 </tr>
             </tbody>
         </table>
 
         <!-- Add user modal -->
-        <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5">Add user</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form th:action="@{/admin/users/add}" method="post">
-                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-
-                            <input type="text" name="username" class="form-control mb-3" placeholder="Username"
-                                minlength="3" required>
-                            <input type="text" name="fullname" class="form-control mb-3" placeholder="Full Name"
-                                minlength="6" required>
-                            <input type="password" name="password" class="form-control mb-3" placeholder="Password"
-                                minlength="8" required>
-                            <input type="text" name="email" class="form-control mb-3" placeholder="Email (optional)">
-                            <select name="role" class="form-select mb-3">
-                                <option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
-                            </select>
-                            <select name="org" class="form-select mb-3">
-                                <option value=""></option>
-                                <option th:each="org : ${orgs}" th:value="${org.name}" th:text="${org.name}">
-                                </option>
-                            </select>
-                            <button type="submit" class="btn btn-primary">Add</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+        <div class="modal fade" id="addUserDialog" tabindex="-1" aria-labelledby="addUserDialog" aria-hidden="true">
+            <div class="modal-dialog"></div>
         </div>
 
     </div>

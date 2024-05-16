@@ -41,4 +41,10 @@ public class HelloController {
         return "hello.html";
     }
 
+    @GetMapping("/snippet")
+    public String hello_snippet(Model viewModel) {
+        viewModel.addAttribute("content", "Hello from snippet");
+        return "_hello.html";
+    }
+
 }

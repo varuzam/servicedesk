@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
-<head th:replace="~{snippets/base.html::head('List orgs')}"></head>
+<head th:replace="~{_base.html::head('List orgs')}"></head>
 
 <body>
-    <div class="container">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addOrgModal">Add
-            organisation</button>
+    <nav th:replace="~{_base.html::navbar}"></nav>
+    <div class="container mt-2">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="button" hx-get="/admin/orgs/add" hx-target="#addOrgDialog" hx-trigger="click"
+                class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addOrgDialog">Add
+                organization</button>
+        </div>
         <table class="table">
             <thead>
                 <tr>
@@ -16,28 +20,17 @@
             <tbody>
                 <tr th:each="org : ${orgs}">
                     <td><span th:text="${org.name}"> name </span></td>
-                    <td><a th:href="@{|/admin/orgs/${org.id}/delete|}"><i class="bi bi-trash"></i></a></td>
+                    <td>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end"><a
+                                th:href="@{|/admin/orgs/${org.id}/edit|}"><i class="bi bi-pencil-fill"></i></a><a
+                                th:href="@{|/admin/orgs/${org.id}/delete|}"><i class="bi bi-trash"></i></a></div>
+                    </td>
                 </tr>
             </tbody>
         </table>
         <!-- Add org modal -->
-        <div class="modal fade" id="addOrgModal" tabindex="-1" aria-labelledby="addOrgModal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5">Add organisation</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form th:action="@{/admin/orgs/add}" method="post">
-                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                            <input type="text" name="name" class="form-control mb-3" placeholder="Org name"
-                                minlength="3" required>
-                            <button type="submit" class="btn btn-primary">Add</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+        <div class="modal fade" id="addOrgDialog" tabindex="-1" aria-labelledby="addOrgDialog" aria-hidden="true">
+            <div class="modal-dialog"></div>
         </div>
     </div>
 </body>

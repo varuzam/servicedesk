@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
-<head th:replace="~{snippets/base.html::head('Register user')}"></head>
+<head th:replace="~{_base.html::head('Register user')}"></head>
 
 <body>
     <script>
@@ -15,8 +15,9 @@
         }
     </script>
 
-    <div class="container">
-        <select id="form-selector" class="form-select my-3" onchange="showRegisterForm()">
+    <div class="container" style="width: 500px;">
+        <h3 class="mt-5 mb-3">New user registration</h3>
+        <select id="form-selector" class="form-select mb-3" onchange="showRegisterForm()">
             <option value="_">Choose authentication source type</option>
             <option value="internal">InternalDB</option>
             <option value="github">Github.com Oauth</option>

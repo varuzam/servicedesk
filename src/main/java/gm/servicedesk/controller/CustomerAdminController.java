@@ -6,10 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import gm.servicedesk.model.User;
 import gm.servicedesk.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/customer/admin")
@@ -29,14 +29,14 @@ public class CustomerAdminController {
     }
 
     @GetMapping("/users/invite")
-    @ResponseBody
-    public String user_invite(@AuthenticationPrincipal User user) {
+    public String invite_user_dialog(HttpServletRequest req, @AuthenticationPrincipal User user, Model viewModel) {
         String token = userService.inviteUser(user.getOrg());
-        return token;
+        viewModel.addAttribute("inviteUrl", String.format("http://%s/register/%s", req.getServerName(), token));
+        return "customer/admin/_invite_user_dialog.html";
     }
 
     @GetMapping("/users/{id}/delete")
-    public String deleteUser(@AuthenticationPrincipal User user, @PathVariable Integer id) {
+    public String delete_user(@AuthenticationPrincipal User user, @PathVariable Integer id) {
         userService.deleteUser(id, user.getOrg());
         return "redirect:/customer/admin/users";
     }
