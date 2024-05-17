@@ -7,9 +7,9 @@
     <nav th:replace="~{_base.html::navbar}"></nav>
     <div class="container mt-2">
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button type="button" hx-get="/admin/orgs/add" hx-target="#addOrgDialog" hx-trigger="click"
-                class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addOrgDialog">Add
-                organization</button>
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addOrgDialog"
+                hx-get="/admin/orgs/add" hx-target="#addOrgDialog" hx-trigger="click">
+                Add organization</button>
         </div>
         <table class="table">
             <thead>
@@ -29,7 +29,7 @@
             </tbody>
         </table>
         <!-- Add org modal -->
-        <div class="modal fade" id="addOrgDialog" tabindex="-1" aria-labelledby="addOrgDialog" aria-hidden="true">
+        <div id="addOrgDialog" class="modal fade" tabindex="-1">
             <div class="modal-dialog"></div>
         </div>
     </div>

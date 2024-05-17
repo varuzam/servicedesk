@@ -8,8 +8,8 @@
     <div class="container mt-2">
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addUserDialog"
-                hx-get="/admin/users/add" hx-target="#addUserDialog" hx-trigger="click">Add
-                user</button>
+                hx-get="/admin/users/add" hx-target="#addUserDialog" hx-trigger="click">
+                Add user</button>
         </div>
         <table class="table">
             <thead>
@@ -38,7 +38,7 @@
         </table>
 
         <!-- Add user modal -->
-        <div class="modal fade" id="addUserDialog" tabindex="-1" aria-labelledby="addUserDialog" aria-hidden="true">
+        <div id="addUserDialog" class="modal fade" tabindex="-1">
             <div class="modal-dialog"></div>
         </div>
 
