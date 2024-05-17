@@ -7,8 +7,9 @@
     <nav th:replace="~{_base.html::navbar}"></nav>
     <div class="container mt-2">
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addOrgDialog"
-                hx-get="/admin/orgs/add" hx-target="#addOrgDialog" hx-trigger="click">
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                data-bs-target="#mainModalDialog" hx-get="/admin/orgs/add" hx-target="#mainModalDialog"
+                hx-trigger="click">
                 Add organization</button>
         </div>
         <table class="table">
@@ -22,7 +23,9 @@
                     <td><span th:text="${org.name}"> name </span></td>
                     <td>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a th:href="@{|/admin/orgs/${org.id}/edit|}"><i class="bi bi-pencil-fill"></i></a>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#mainModalDialog"
+                                th:hx-get="@{|/admin/orgs/${org.id}/update|}" hx-target="#mainModalDialog"
+                                hx-trigger="click"><i class="bi bi-pencil-fill"></i></a>
                             <a href="#" th:hx-get="@{|/admin/orgs/${org.id}/delete|}" hx-confirm="Are you sure?"
                                 hx-target="closest tr" hx-swap="delete"><i class="bi bi-trash"></i></a>
                         </div>
@@ -30,10 +33,7 @@
                 </tr>
             </tbody>
         </table>
-        <!-- Add org modal -->
-        <div id="addOrgDialog" class="modal fade" tabindex="-1">
-            <div class="modal-dialog"></div>
-        </div>
+        <div th:replace="~{_base.html::mainModalDialog}"></div>
     </div>
 </body>
 

@@ -100,6 +100,21 @@ public class UserService {
         return user;
     }
 
+    public User update(Integer id, UserAddReq req) {
+        User user = repo.findById(id).get();
+        user.setUsername(req.username());
+        user.setFullname(req.fullname());
+        if (!req.email().equals("")) // email is optional
+            user.setEmail(req.email());
+        user.setRole(req.role());
+
+        Org org = orgRepo.findIdByName(req.org());
+        if (org != null) {
+            user.setOrg(org);
+        }
+        return repo.save(user);
+    }
+
     public void update(Integer id, UserProfileUpdateReq req) {
         User user = repo.findById(id).get();
         user.setUsername(req.username());
