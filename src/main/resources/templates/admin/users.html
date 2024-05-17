@@ -29,9 +29,11 @@
                     <td><span th:text="${user.role}"> role </span></td>
                     <td><span th:text="${user.org!=null}?${user.org.name}:''"> org </span></td>
                     <td>
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end"><a
-                                th:href="@{|/admin/users/${user.id}/edit|}"><i class="bi bi-pencil-fill"></i></a><a
-                                th:href="@{|/admin/users/${user.id}/delete|}"><i class="bi bi-trash"></i></a></div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a th:href="@{|/admin/users/${user.id}/edit|}"><i class="bi bi-pencil-fill"></i></a>
+                            <a href="#" th:hx-get="@{|/admin/users/${user.id}/delete|}" hx-confirm="Are you sure?"
+                                hx-target="closest tr" hx-swap="delete"><i class="bi bi-trash"></i></a>
+                        </div>
                     </td>
                 </tr>
             </tbody>
