@@ -52,7 +52,8 @@ public class UserService {
         User user = new User();
         user.setUsername(req.username());
         user.setFullname(req.fullname());
-        user.setEmail(req.email());
+        if (!req.email().equals("")) // email is optional
+            user.setEmail(req.email());
         user.setPassword(passwordEncoder.encode(req.password()));
         user.setRole(req.role());
 
@@ -80,7 +81,8 @@ public class UserService {
         User user = new User();
         user.setUsername(req.username());
         user.setFullname(req.fullname());
-        user.setEmail(req.email());
+        if (!req.email().equals(""))
+            user.setEmail(req.email());
         user.setPassword(passwordEncoder.encode(req.password()));
         user.setRole(Role.CUSTOMER); // registration available only for Role.CUSTOMER
 
@@ -102,7 +104,8 @@ public class UserService {
         User user = repo.findById(id).get();
         user.setUsername(req.username());
         user.setFullname(req.fullname());
-        user.setEmail(req.email());
+        if (!req.email().equals("")) // email is optional
+            user.setEmail(req.email());
         repo.save(user);
     }
 
