@@ -24,20 +24,20 @@ public class CustomerAdminController {
     // --- USER ---
     @GetMapping("/users")
     public String users(@AuthenticationPrincipal User user, Model viewModel) {
-        viewModel.addAttribute("users", userService.findByOrg(user.getOrg()));
+        viewModel.addAttribute("users", userService.findAll(user.getOrg()));
         return "customer/admin/users.html";
     }
 
     @GetMapping("/users/invite")
     public String invite_user_dialog(HttpServletRequest req, @AuthenticationPrincipal User user, Model viewModel) {
-        String token = userService.inviteUser(user.getOrg());
+        String token = userService.generateInviteToken(user.getOrg());
         viewModel.addAttribute("inviteUrl", String.format("http://%s/register/%s", req.getServerName(), token));
         return "customer/admin/_invite_user_dialog.html";
     }
 
     @GetMapping("/users/{id}/delete")
     public String delete_user(@AuthenticationPrincipal User user, @PathVariable Integer id) {
-        userService.deleteUser(id, user.getOrg());
+        userService.delete(id, user.getOrg());
         return "redirect:/customer/admin/users";
     }
 

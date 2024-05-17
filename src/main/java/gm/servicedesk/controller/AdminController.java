@@ -69,13 +69,13 @@ public class AdminController {
 
     @PostMapping("/users/add")
     public String add_user_form(@Valid UserAddReq form) {
-        userService.addUser(form);
+        userService.add(form);
         return "redirect:/admin/users";
     }
 
     @GetMapping("/users/{id}/delete")
     public String delete_user(@PathVariable Integer id) {
-        userService.deleteUser(id);
+        userService.delete(id);
         return "redirect:/admin/users";
     }
 }

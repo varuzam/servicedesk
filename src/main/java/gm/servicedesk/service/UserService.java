@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import gm.servicedesk.dto.UserAddReq;
+import gm.servicedesk.dto.UserProfileUpdateReq;
 import gm.servicedesk.dto.UserRegisterReq;
 import gm.servicedesk.model.Org;
 import gm.servicedesk.model.Role;
@@ -39,11 +40,15 @@ public class UserService {
         return repo.findAll();
     }
 
-    public List<User> findByOrg(Org org) {
+    public List<User> findAll(Org org) {
         return repo.findByOrg(org);
     }
 
-    public User addUser(UserAddReq req) {
+    public User find(Integer id) {
+        return repo.findById(id).get();
+    }
+
+    public User add(UserAddReq req) {
         User user = new User();
         user.setUsername(req.username());
         user.setFullname(req.fullname());
@@ -58,7 +63,7 @@ public class UserService {
         return repo.save(user);
     }
 
-    public String inviteUser(Org org) {
+    public String generateInviteToken(Org org) {
         var token = UUID.randomUUID().toString();
         var invite = new UserInvite();
         invite.setToken(token);
@@ -93,12 +98,26 @@ public class UserService {
         return user;
     }
 
-    public void deleteUser(Integer id) {
+    public void update(Integer id, UserProfileUpdateReq req) {
+        User user = repo.findById(id).get();
+        user.setUsername(req.username());
+        user.setFullname(req.fullname());
+        user.setEmail(req.email());
+        repo.save(user);
+    }
+
+    public void updatePassword(Integer id, String password) {
+        User user = repo.findById(id).get();
+        user.setPassword(passwordEncoder.encode(password));
+        repo.save(user);
+    }
+
+    public void delete(Integer id) {
         repo.deleteById(id);
     }
 
     @Transactional
-    public void deleteUser(Integer id, Org org) {
+    public void delete(Integer id, Org org) {
         repo.deleteByIdAndOrg(id, org);
     }
 }
