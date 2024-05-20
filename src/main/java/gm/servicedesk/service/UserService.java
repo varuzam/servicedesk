@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import gm.servicedesk.dto.UserAddReq;
 import gm.servicedesk.dto.UserProfileUpdateReq;
 import gm.servicedesk.dto.UserRegisterReq;
+import gm.servicedesk.exception.*;
 import gm.servicedesk.model.Org;
 import gm.servicedesk.model.Role;
 import gm.servicedesk.model.User;
@@ -45,7 +46,7 @@ public class UserService {
     }
 
     public User find(Integer id) {
-        return repo.findById(id).get();
+        return repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
     }
 
     public User add(UserAddReq req) {
@@ -101,7 +102,7 @@ public class UserService {
     }
 
     public User update(Integer id, UserAddReq req) {
-        User user = repo.findById(id).get();
+        User user = find(id);
         user.setUsername(req.username());
         user.setFullname(req.fullname());
         if (!req.email().equals("")) // email is optional
@@ -116,7 +117,7 @@ public class UserService {
     }
 
     public void update(Integer id, UserProfileUpdateReq req) {
-        User user = repo.findById(id).get();
+        User user = find(id);
         user.setUsername(req.username());
         user.setFullname(req.fullname());
         if (!req.email().equals("")) // email is optional
@@ -125,7 +126,7 @@ public class UserService {
     }
 
     public void updatePassword(Integer id, String password) {
-        User user = repo.findById(id).get();
+        User user = find(id);
         user.setPassword(passwordEncoder.encode(password));
         repo.save(user);
     }
