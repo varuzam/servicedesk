@@ -21,7 +21,7 @@
                 </select>
                 <select name="org" class="form-select mb-3">
                     <option th:value="${user.org}" th:text="${user.org?.name}"></option>
-                    <option value="" th:if="${user.org!=null}"></option>
+                    <option th:if="${user.org!=null}" value=""></option>
                     <option th:each="org : ${orgs}" th:if="${org}!=${user.org}" th:value="${org.name}"
                         th:text="${org.name}">
                     </option>

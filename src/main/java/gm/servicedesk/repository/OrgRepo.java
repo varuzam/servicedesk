@@ -5,5 +5,5 @@ import gm.servicedesk.model.Org;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OrgRepo extends JpaRepository<Org, Integer> {
-    public Org findIdByName(String name);
+    public Org findByName(String name);
 }

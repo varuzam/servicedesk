@@ -58,7 +58,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(req.password()));
         user.setRole(req.role());
 
-        Org org = orgRepo.findIdByName(req.org());
+        Org org = orgRepo.findByName(req.org());
         if (org != null) {
             user.setOrg(org);
         }
@@ -87,7 +87,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(req.password()));
         user.setRole(Role.CUSTOMER); // registration available only for Role.CUSTOMER
 
-        Org org = orgRepo.findIdByName(invite.getOrg().getName());
+        Org org = orgRepo.findByName(invite.getOrg().getName());
         if (org == null) {
             return null;
         }
@@ -109,7 +109,7 @@ public class UserService {
             user.setEmail(req.email());
         user.setRole(req.role());
 
-        Org org = orgRepo.findIdByName(req.org());
+        Org org = orgRepo.findByName(req.org());
         if (org != null) {
             user.setOrg(org);
         }
