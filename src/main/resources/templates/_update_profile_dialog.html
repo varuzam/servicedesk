@@ -1,27 +1,23 @@
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-5">Edit user profile</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form th:action="@{/profile}" method="post">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+<div class="modal-header">
+    <h1 class="modal-title fs-5">Edit user profile</h1>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <form th:action="@{/profile}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
-                <input type="text" name="username" class="form-control mb-3" th:value="${user.username}"
-                    th:placeholder="${user.username}" minlength="3" required>
-                <input type="text" name="fullname" class="form-control mb-3" th:value="${user.fullname}"
-                    th:placeholder="${user.fullname}" minlength="6" required>
-                <input type="text" name="email" class="form-control mb-3" th:value="${user.email}"
-                    th:placeholder="${user.email}">
-                <button type="submit" class="btn btn-primary">Update profile</button>
-            </form>
-            <hr>
-            <form th:action="@{/profile/updatepassword}" method="post">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <input type="password" name="password" class="form-control mb-3" placeholder="Password" minlength="8">
-                <button type="submit" class="btn btn-primary">Update password</button>
-            </form>
-        </div>
-    </div>
+        <input type="text" name="username" class="form-control mb-3" th:value="${user.username}"
+            th:placeholder="${user.username}" minlength="3" required>
+        <input type="text" name="fullname" class="form-control mb-3" th:value="${user.fullname}"
+            th:placeholder="${user.fullname}" minlength="6" required>
+        <input type="text" name="email" class="form-control mb-3" th:value="${user.email}"
+            th:placeholder="${user.email}">
+        <button type="submit" class="btn btn-primary">Update profile</button>
+    </form>
+    <hr>
+    <form th:action="@{/profile/updatepassword}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <input type="password" name="password" class="form-control mb-3" placeholder="Password" minlength="8">
+        <button type="submit" class="btn btn-primary">Update password</button>
+    </form>
 </div>
