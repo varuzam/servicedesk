@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.5</version>
+		<version>3.3.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>gm</groupId>
@@ -101,5 +101,37 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+    <profile>
+        <id>native</id>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.graalvm.buildtools</groupId>
+                    <artifactId>native-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>build-native</id>
+                            <goals>
+                                <goal>compile-no-fork</goal>
+                            </goals>
+                            <phase>package</phase>
+                        </execution>
+                    </executions>
+					<configuration>
+						<buildArgs>
+							<buildArg>-J-Xmx6g</buildArg>
+							<buildArg>--initialize-at-build-time=org.sqlite.util.ProcessRunner</buildArg>
+						</buildArgs>
+						<metadataRepository>
+							<enabled>true</enabled>
+						</metadataRepository>
+					</configuration>
+                </plugin>
+            </plugins>
+        </build>
+    </profile>
+	</profiles>
 
 </project>

@@ -1,0 +1,14 @@
+	openj9		openjdk		graalvm			native		native(Qute template)
+
+/hello/ping
+Spring	21700rps 290mb	29500rps 670mb	28600rps 500mb		
+Quarkus	25800rps 270mb	30900rps 480mb	31000rps 400mb		27000rps 160mb	25000rps 160mb	
+
+/hello/snippet		
+S 	21100rps 290mb	29100rps 700mb	28500rps 520mb	
+Q 	23800rps 300mb	30600rps 546mb	30800rps 460mb		22000rps 250m
+
+/hello/template
+S 	15800rps 300mb	20600rps 730mb	20800rps 570mb
+Q 	17100rps 300mb	25100rps 700mb	25000rps 460mb		21500rps 270m
+			

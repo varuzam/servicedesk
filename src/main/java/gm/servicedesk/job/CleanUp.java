@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import gm.servicedesk.model.UserInvite;
 import gm.servicedesk.repository.UserInviteRepo;
@@ -22,6 +23,7 @@ public class CleanUp {
     private UserInviteRepo userInviteRepo;
 
     @Scheduled(fixedRate = 7200000)
+    @Transactional
     void deleteExpiredInvites() {
         List<UserInvite> invites = userInviteRepo
                 .deleteByCreatedAtBefore(LocalDateTime.now().minusHours(INVITE_DURATION_HOURS));
