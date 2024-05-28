@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.savedrequest.NullRequestCache;
 
 import gm.servicedesk.service.UserAuthService;
 
@@ -24,6 +25,8 @@ public class AppConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        // Disable requestCache to force spring not create sessions for anonymous users,
+        // otherwise many requests from them leads to OOM
         return http
                 .authorizeHttpRequests(req -> req
                         .requestMatchers("/login/**").permitAll()
@@ -36,6 +39,7 @@ public class AppConfig {
                 .formLogin(Customizer.withDefaults())
                 .userDetailsService(userAuthService)
                 .oauth2Login(o -> o.userInfoEndpoint(uie -> uie.userService(userAuthService)))
+                .requestCache(rc -> rc.requestCache(new NullRequestCache()))
                 .build();
     }
 
