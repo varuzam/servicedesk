@@ -24,7 +24,7 @@ public class CleanUp {
 
     @Scheduled(fixedRate = 7200000)
     @Transactional
-    void deleteExpiredInvites() {
+    public void deleteExpiredInvites() {
         List<UserInvite> invites = userInviteRepo
                 .deleteByCreatedAtBefore(LocalDateTime.now().minusHours(INVITE_DURATION_HOURS));
         log.info("{} expired invites has beed deleted", invites.size());

@@ -30,7 +30,7 @@ public class UserAuthService implements UserDetailsService, OAuth2UserService<OA
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = repo.findByUsername(username);
         if (user == null) {
-            throw new UsernameNotFoundException("The username does not exist in DB");
+            throw new UsernameNotFoundException("User not found in DB with name" + username);
         }
         return user;
     }
