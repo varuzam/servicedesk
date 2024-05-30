@@ -22,7 +22,7 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Object> handleRNFException(Exception ex) {
-        log.error("Resource not found", ex.getMessage());
+        log.error("ResourceNotFound: {}", ex.getMessage());
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 

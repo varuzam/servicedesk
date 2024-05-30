@@ -49,7 +49,10 @@ public class UserService {
         return repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
     }
 
+    @Transactional
     public User add(UserAddReq req) {
+        Org org = orgRepo.findByName(req.org())
+                .orElseThrow(() -> new ResourceNotFoundException("Org not found with name " + req.org()));
         User user = new User();
         user.setUsername(req.username());
         user.setFullname(req.fullname());
@@ -57,11 +60,8 @@ public class UserService {
             user.setEmail(req.email());
         user.setPassword(passwordEncoder.encode(req.password()));
         user.setRole(req.role());
+        user.setOrg(org);
 
-        Org org = orgRepo.findByName(req.org());
-        if (org != null) {
-            user.setOrg(org);
-        }
         return repo.save(user);
     }
 
@@ -74,11 +74,13 @@ public class UserService {
         return token;
     }
 
+    @Transactional
     public User registerUserByInviteToken(String token, UserRegisterReq req) {
-        UserInvite invite = userInviterepo.findOneByToken(token);
-        if (invite == null) {
-            return null;
-        }
+        UserInvite invite = userInviterepo.findOneByToken(token)
+                .orElseThrow(() -> new ResourceNotFoundException("Invite not found with token " + token));
+        Org org = orgRepo.findByName(invite.getOrg().getName())
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Org not found with name " + invite.getOrg().getName()));
         User user = new User();
         user.setUsername(req.username());
         user.setFullname(req.fullname());
@@ -86,36 +88,28 @@ public class UserService {
             user.setEmail(req.email());
         user.setPassword(passwordEncoder.encode(req.password()));
         user.setRole(Role.CUSTOMER); // registration available only for Role.CUSTOMER
-
-        Org org = orgRepo.findByName(invite.getOrg().getName());
-        if (org == null) {
-            return null;
-        }
         user.setOrg(org);
-        if (repo.save(user) == null) {
-            return null;
-        } else {
-            userInviterepo.delete(invite);
-        }
 
+        repo.save(user);
+        userInviterepo.delete(invite);
         return user;
     }
 
+    @Transactional
     public User update(Integer id, UserAddReq req) {
+        Org org = orgRepo.findByName(req.org())
+                .orElseThrow(() -> new ResourceNotFoundException("Org not found with name " + req.org()));
         User user = find(id);
         user.setUsername(req.username());
         user.setFullname(req.fullname());
         if (!req.email().equals("")) // email is optional
             user.setEmail(req.email());
         user.setRole(req.role());
-
-        Org org = orgRepo.findByName(req.org());
-        if (org != null) {
-            user.setOrg(org);
-        }
+        user.setOrg(org);
         return repo.save(user);
     }
 
+    @Transactional
     public void update(Integer id, UserProfileUpdateReq req) {
         User user = find(id);
         user.setUsername(req.username());
@@ -125,6 +119,7 @@ public class UserService {
         repo.save(user);
     }
 
+    @Transactional
     public void updatePassword(Integer id, String password) {
         User user = find(id);
         user.setPassword(passwordEncoder.encode(password));

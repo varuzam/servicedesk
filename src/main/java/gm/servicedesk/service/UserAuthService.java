@@ -28,10 +28,8 @@ public class UserAuthService implements UserDetailsService, OAuth2UserService<OA
     // used by Spring Security for formLogin & httpBasic
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = repo.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found in DB with name" + username);
-        }
+        User user = repo.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with name" + username));
         return user;
     }
 
@@ -39,11 +37,9 @@ public class UserAuthService implements UserDetailsService, OAuth2UserService<OA
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oauth2User = (new DefaultOAuth2UserService()).loadUser(userRequest);
-        User user = repo.findByUsername(oauth2User.getAttribute("login").toString());
-        if (user == null) {
-            log.warn("The username {} does not exist in DB", oauth2User.getAttribute("login").toString());
-            throw new UsernameNotFoundException("The username does not exist in DB");
-        }
+        String oauthLogin = oauth2User.getAttribute("login").toString();
+        User user = repo.findByUsername(oauthLogin)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with name" + oauthLogin));
         return user;
     }
 }
