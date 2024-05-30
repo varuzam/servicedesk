@@ -35,7 +35,7 @@ public class User implements UserDetails, OAuth2User {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    Role role;
+    Role role = Role.CUSTOMER;
 
     @ManyToOne()
     @JoinColumn(name = "org_id")

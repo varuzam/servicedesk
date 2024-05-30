@@ -15,7 +15,6 @@ import gm.servicedesk.dto.UserRegisterReq;
 import gm.servicedesk.dto.UserUpdateReq;
 import gm.servicedesk.exception.*;
 import gm.servicedesk.model.Org;
-import gm.servicedesk.model.Role;
 import gm.servicedesk.model.User;
 import gm.servicedesk.model.UserInvite;
 import gm.servicedesk.repository.OrgRepo;
@@ -85,10 +84,9 @@ public class UserService {
         User user = new User();
         user.setUsername(req.username());
         user.setFullname(req.fullname());
-        if (!req.email().equals(""))
+        if (!req.email().isBlank())
             user.setEmail(req.email());
         user.setPassword(passwordEncoder.encode(req.password()));
-        user.setRole(Role.CUSTOMER); // registration available only for Role.CUSTOMER
         user.setOrg(org);
 
         repo.save(user);
@@ -103,7 +101,7 @@ public class UserService {
         User user = find(id);
         user.setUsername(req.username());
         user.setFullname(req.fullname());
-        if (!req.email().equals("")) // email is optional
+        if (!req.email().isBlank()) // email is optional
             user.setEmail(req.email());
         user.setRole(req.role());
         user.setOrg(org);
@@ -115,7 +113,7 @@ public class UserService {
         User user = find(id);
         user.setUsername(req.username());
         user.setFullname(req.fullname());
-        if (!req.email().equals("")) // email is optional
+        if (!req.email().isBlank()) // email is optional
             user.setEmail(req.email());
         repo.save(user);
     }
