@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import gm.servicedesk.exception.ResourceNotFoundException;
 import gm.servicedesk.model.User;
 import gm.servicedesk.repository.UserRepo;
 
@@ -37,6 +38,8 @@ public class UserAuthService implements UserDetailsService, OAuth2UserService<OA
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oauth2User = (new DefaultOAuth2UserService()).loadUser(userRequest);
+        if (oauth2User.getAttribute("login") == null)
+            throw new ResourceNotFoundException("The attr 'login' not found in Oauth2 payload");
         String oauthLogin = oauth2User.getAttribute("login").toString();
         User user = repo.findByUsername(oauthLogin)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with name" + oauthLogin));
