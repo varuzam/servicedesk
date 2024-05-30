@@ -86,4 +86,10 @@ public class User implements UserDetails, OAuth2User {
     public String getName() {
         return username;
     }
+
+    @PrePersist
+    void onSave() {
+        if (email.isBlank()) // email is optional
+            email = null;
+    }
 }

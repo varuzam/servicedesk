@@ -26,7 +26,7 @@ public class UserInvite {
     LocalDateTime createdAt;
 
     @PrePersist
-    void onCreate() {
+    void onSave() {
         this.createdAt = LocalDateTime.now();
     }
 }

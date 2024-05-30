@@ -56,8 +56,7 @@ public class UserService {
         User user = new User();
         user.setUsername(req.username());
         user.setFullname(req.fullname());
-        if (!req.email().equals("")) // email is optional
-            user.setEmail(req.email());
+        user.setEmail(req.email());
         user.setPassword(passwordEncoder.encode(req.password()));
         user.setRole(req.role());
         user.setOrg(org);
@@ -84,8 +83,7 @@ public class UserService {
         User user = new User();
         user.setUsername(req.username());
         user.setFullname(req.fullname());
-        if (!req.email().isBlank())
-            user.setEmail(req.email());
+        user.setEmail(req.email());
         user.setPassword(passwordEncoder.encode(req.password()));
         user.setOrg(org);
 
@@ -101,8 +99,7 @@ public class UserService {
         User user = find(id);
         user.setUsername(req.username());
         user.setFullname(req.fullname());
-        if (!req.email().isBlank()) // email is optional
-            user.setEmail(req.email());
+        user.setEmail(req.email());
         user.setRole(req.role());
         user.setOrg(org);
         return repo.save(user);
@@ -113,8 +110,7 @@ public class UserService {
         User user = find(id);
         user.setUsername(req.username());
         user.setFullname(req.fullname());
-        if (!req.email().isBlank()) // email is optional
-            user.setEmail(req.email());
+        user.setEmail(req.email());
         repo.save(user);
     }
 
