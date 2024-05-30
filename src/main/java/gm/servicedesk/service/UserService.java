@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import gm.servicedesk.dto.UserAddReq;
 import gm.servicedesk.dto.UserProfileUpdateReq;
 import gm.servicedesk.dto.UserRegisterReq;
+import gm.servicedesk.dto.UserUpdateReq;
 import gm.servicedesk.exception.*;
 import gm.servicedesk.model.Org;
 import gm.servicedesk.model.Role;
@@ -96,7 +97,7 @@ public class UserService {
     }
 
     @Transactional
-    public User update(Integer id, UserAddReq req) {
+    public User update(Integer id, UserUpdateReq req) {
         Org org = orgRepo.findByName(req.org())
                 .orElseThrow(() -> new ResourceNotFoundException("Org not found with name " + req.org()));
         User user = find(id);

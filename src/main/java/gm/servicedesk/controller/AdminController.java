@@ -14,6 +14,7 @@ import gm.servicedesk.model.Role;
 import gm.servicedesk.model.User;
 import gm.servicedesk.dto.OrgAddReq;
 import gm.servicedesk.dto.UserAddReq;
+import gm.servicedesk.dto.UserUpdateReq;
 import gm.servicedesk.service.OrgService;
 import gm.servicedesk.service.UserService;
 import jakarta.validation.Valid;
@@ -86,7 +87,7 @@ public class AdminController {
     }
 
     @PostMapping("/users/{id}/update")
-    public String update_user_form(@PathVariable Integer id, @Valid UserAddReq form) {
+    public String update_user_form(@PathVariable Integer id, @Valid UserUpdateReq form) {
         userService.update(id, form);
         return "redirect:/admin/users";
     }

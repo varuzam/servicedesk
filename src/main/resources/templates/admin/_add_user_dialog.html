@@ -14,7 +14,7 @@
             <option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
         </select>
         <select name="org" class="form-select mb-3">
-            <option value=""></option>
+            <option value="">select org</option>
             <option th:each="org : ${orgs}" th:value="${org.name}" th:text="${org.name}">
             </option>
         </select>
